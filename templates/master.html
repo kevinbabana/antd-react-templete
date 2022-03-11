@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <script crossorigin  src="https://unpkg.com/react@latest/umd/react.development.js" crossorigin="anonymous"></script>
+    <script crossorigin  src="https://unpkg.com/react-dom@latest/umd/react-dom.development.js"></script>
+    <script crossorigin  src="https://unpkg.com/babel-standalone@latest/babel.min.js" crossorigin="anonymous"></script>
+ 
+    <!-- Ant Design Components and Icons -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/antd/4.18.5/antd.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/ant-design-icons/4.7.0/index.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.18.5/antd.min.css" />
+    
+
+<script type="text/babel" src="/static/src/master.js"></script>
+<link rel="stylesheet" href="/static/css/master.css">
+{% block script %}{% endblock %}
+</head>
+<body>
+    <div id="container" >
+   
+    </div>
+    {% block main %}{% endblock %}
+    
+</body>
+</html>
