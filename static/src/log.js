@@ -1,9 +1,12 @@
 const  { useState } = React;
-const { Form, Row, Col, Input, Button, Select, TimePicker,Card ,Empty,DatePicker, Space ,Modal,Spin } = antd;
+const { Form, Row, Col, Input, Button, Select, TimePicker,Card ,Empty,DatePicker, Space ,Modal,Spin, Table,AutoComplete} = antd;
 const { DownOutlined, UpOutlined } = icons;
+
+
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 
+const Logpage = () =>{
 const IEDALogSearchForm = () => {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm();
@@ -11,13 +14,40 @@ const IEDALogSearchForm = () => {
   const [lotinputvalue,setlotinputvalue] = React.useState("");
 
   const getFields = () => {
+
+    const mockVal = (str, repeat = 1) => ({
+      value: str.repeat(repeat),
+    }); 
+  
+  const [value, setValue] = useState('');
+  const [options, setOptions] = useState([]);
+
+  const onSearch = (searchText) => {
+    setOptions(
+      !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
+    );
+  };
+
+  const onSelect = (data) => {
+    console.log('onSelect', data);
+  };
+
+  const onChange = (data) => {
+    setValue(data);
+  };
+    
     const field = [
                 <Col span={8} key={1}>
                   <Form.Item name={`Lotid`}  label={`Lot ID`} >
-                      <Input value={lotinputvalue} placeholder="輸入Lot ID" onInput ={(e) => {
-                        const upperlotid = e.target.value;
-                        setlotinputvalue(upperlotid.toUpperCase())
-                      }}/>
+                  
+                  <AutoComplete
+                    value={value}
+                    options={options}
+                    onSelect={onSelect}
+                    onSearch={onSearch}
+                    onChange={onChange}
+                    placeholder="control mode"
+                  />
  
                   </Form.Item>
                 </Col>,
@@ -93,6 +123,7 @@ const IEDALogSearchForm = () => {
 
 
 
+
 const APLogSearchForm = () => {
   const [expand, setExpand] = useState(false);
   const [form] = Form.useForm();
@@ -105,7 +136,7 @@ const APLogSearchForm = () => {
                 <Col span={8} key={1}>
                   <Form.Item name={`APName`}  label={`AP name`} >
                     
-                      <Input placeholder="輸入Lot ID" />
+                      <Input placeholder="輸入AP name" />
  
                   </Form.Item>
                 </Col>,
@@ -128,7 +159,10 @@ const APLogSearchForm = () => {
   
 
   const onFinish = (values) => {
+    values.SWITCHFAB = Cookies.get('SWITCHFAB')
+    console.log(Cookies.get('SWITCHFAB'))
     console.log('Received values of form: ', values);
+    
   };
 
   return (
@@ -137,6 +171,7 @@ const APLogSearchForm = () => {
       name="advanced_search"
       className="ant-advanced-search-form"
       onFinish={onFinish}
+       onSubmit={onFinish}
     >
       <Row gutter={24}>{getFields()}</Row>
       <Row>
@@ -146,7 +181,7 @@ const APLogSearchForm = () => {
             textAlign: 'right',
           }}
         >
-          <Button type="primary" htmlType="submit" onClick ={query_log}>
+          <Button type="primary" htmlType="submit" >
             搜尋
           </Button>
           <Button
@@ -180,21 +215,18 @@ const APLogSearchForm = () => {
 
 function query_log(e){
   e.preventDefault();
-  console.log('You clicked submit.');
-  fetch( request的url, {
-    method: "GET",
-    body: JSON.stringify(data),   /*把json資料字串化*/
-    headers: new Headers({
-        'Content-Type': 'application/json'
-    })
-})
-.then(res => res.json())
-.then(data => {
-      /*接到request data後要做的事情*/
-})
-.catch(e => {
-    /*發生錯誤時要做的事情*/
-})
+
+  
+  
+  setresultdata([...resultdata,{
+    key: '1',
+    name: 'John Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+  }]);
+  console.log('resultdata');
+
+  console.log(resultdata);
 }
 
 const tabList = [
@@ -267,17 +299,34 @@ const Loading = () => {
 };
 
 
-const ResultCard = props => {
+const data = [
   
-  return <div>{props.children}</div>;
+];
+
+const [resultdata, setresultdata] = useState(data);
+
+const columns = [
+  
+];
+
+const ResultCard = () => {
+  
+  return <Table columns={columns} dataSource={resultdata} onChange={onChange} />;
+
+}
+function onChange(pagination, filters, sorter, extra) {
+  console.log('params', pagination, filters, sorter, extra);
+}
+
+return <div>
+<TabsCard /> 
+
+<div style={{  marginTop: 30 ,minHeight: 500  }}><ResultCard/></div>
+</div>;
 
 }
 
 ReactDOM.render(
-  <div>
-    <TabsCard /> 
-    
-    <div className="search-result-list"><ResultCard></ResultCard></div>
-  </div>,
+  <Logpage></Logpage>,
   document.getElementById('content'),
 );
