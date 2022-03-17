@@ -14,9 +14,9 @@ def index():
     resp = make_response(render_template('ADHSTools/log.html'))
     resp.set_cookie('SWITCHFAB', 'BE')
     return resp
-@app.route("/2")
-def yanwei():
-    return render_template("index2.html")
+@app.route("/goldenmap")
+def goldenmap_page():
+    return render_template("goldenmap.html")
 
 @app.route("/3")
 def yanw2ei():

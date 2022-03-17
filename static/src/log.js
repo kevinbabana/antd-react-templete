@@ -141,11 +141,13 @@ const APLogSearchForm = () => {
                   </Form.Item>
                 </Col>,
                 <Col span={8} key={2}>
-                <Form.Item name={`Date`}  label={`日期`} >
-                  
-                <DatePicker onChange={onChange} />
-
-                </Form.Item>
+                  <Form.Item label="Time Range" >
+                    <Select defaultValue = "1">
+                      <Select.Option value="1">過去一天</Select.Option>
+                      <Select.Option value="3">過去三天</Select.Option>
+                      <Select.Option value="7">過去七天</Select.Option>
+                    </Select>
+                  </Form.Item>
               </Col>,
 
 
@@ -159,7 +161,7 @@ const APLogSearchForm = () => {
   
 
   const onFinish = (values) => {
-    values.SWITCHFAB = Cookies.get('SWITCHFAB')
+    values.SWITCHFAB = document.cookie.SWITCHFAB;
     console.log(Cookies.get('SWITCHFAB'))
     console.log('Received values of form: ', values);
     
