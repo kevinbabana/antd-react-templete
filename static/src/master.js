@@ -1,5 +1,5 @@
 
-const { Card,Layout,Descriptions,Input, Menu, Breadcrumb ,Badge ,Col, Row,Switch,Radio} = antd;
+const { Card,Layout,Descriptions,Input, Menu, Breadcrumb ,Badge ,Col, Row,Switch,Radio,message } = antd;
 const { UserOutlined, LaptopOutlined, NotificationOutlined,SettingOutlined ,FileSearchOutlined} = icons;
 
 const { SubMenu } = Menu;
@@ -12,9 +12,25 @@ const SwitchFab = e => {
   console.log('Received values of form: ', e.target.value);
   Cookies.set('SWITCHFAB',e.target.value );
   console.log('Received values of form: ', Cookies.get('SWITCHFAB'));
-  
+  success(e.target.value)
  
 };
+
+const openNotification = (fab) => {
+  notification.open({
+    message: '切換成功',
+    description:
+      '成功切換至  :  '+ fab,
+    onClick: () => {
+      console.log('Notification Clicked!');
+    },
+  });
+};
+const success = (fab) => {
+  message.success('成功切換至  : '+ fab);
+};
+
+
 
 
 
@@ -22,12 +38,15 @@ const SwitchFab = e => {
 
 ReactDOM.render(
   <Layout className="layout">
+
     <Header  style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
+    <Row>
       <div className="logo" />
       <Menu theme="dark" mode="horizontal" >
+      <Menu.Item icon = {<FileSearchOutlined />} key="home"><a href="/log">ADHS Home</a></Menu.Item>
       <Menu.Item icon = {<FileSearchOutlined />} key="3"><a href="/log">ADHS Log</a></Menu.Item>
       <SubMenu key="ConfigSubMenu" icon={<SettingOutlined />} title="ADHS Config">
-      <Menu.Item key="Setup"><a>內部設定</a></Menu.Item>
+      <Menu.Item key="Setup"><a href ="/ADHSConfig?key=Setup">內部設定</a></Menu.Item>
       <Menu.Item key="in"><a>內部資料</a></Menu.Item>
       <Menu.Item key="out"><a>外部資料</a></Menu.Item>
       </SubMenu>
@@ -41,9 +60,10 @@ ReactDOM.render(
 
       </Menu>
       
-      
-      
+          </Row> 
+    
     </Header>
+ 
     <Content className="site-layout" style={{ padding: '0 50px', marginTop: 64 }}>
 
     <Content style={{ padding: '0 50px' }}>
@@ -61,6 +81,7 @@ ReactDOM.render(
       
       <Radio value="BE">BackEnd</Radio>
       <Radio value="SOIC">SOIC</Radio>
+      
     </Radio.Group>
     <span style={{ margin: '16px 0' , float: 'right',padding: '0 20px'}} >Site :    </span>
       </Col>

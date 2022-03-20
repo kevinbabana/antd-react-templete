@@ -17,10 +17,12 @@ def index():
 @app.route("/goldenmap")
 def goldenmap_page():
     return render_template("goldenmap.html")
+@app.route("/ADHSConfig")
+def ADHSConfig():
+    resp = make_response(render_template('ADHSConfig/ADHSConfig.html'))
+    resp.set_cookie('SWITCHFAB', 'BE')
+    return resp
 
-@app.route("/3")
-def yanw2ei():
-    return render_template("index3.html")
 @app.route("/test")
 def test():
     
