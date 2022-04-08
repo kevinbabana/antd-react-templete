@@ -1,5 +1,9 @@
 
 from flask import Flask, render_template,make_response
+from ADHSConfig.ADHSConfig_app import ADHSConfig_app
+
+
+
 
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
@@ -8,6 +12,7 @@ class CustomFlask(Flask):
         variable_end_string = '%%'    ))
 
 app = CustomFlask(__name__)
+app.register_blueprint(ADHSConfig_app)
 
 @app.route("/log")
 def index():
