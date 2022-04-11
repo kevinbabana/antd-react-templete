@@ -1,5 +1,5 @@
 
-from flask import Flask, render_template,make_response
+from flask import Flask, render_template,make_response,Request
 from ADHSConfig.ADHSConfig_app import ADHSConfig_app
 
 
@@ -13,6 +13,7 @@ class CustomFlask(Flask):
 
 app = CustomFlask(__name__)
 app.register_blueprint(ADHSConfig_app)
+
 
 @app.route("/log")
 def index():
@@ -28,12 +29,25 @@ def ADHSConfig():
     resp.set_cookie('SWITCHFAB', 'BE')
     return resp
 
-@app.route("/test")
-def test():
-    
+@app.route("/")
+def test():   
     return render_template("test.html")
 
+class Middleware:
 
+    def __init__(self, app):
+        self.app = app
+
+    def __call__(self, environ, start_response):
+        # not Flask request - from werkzeug.wrappers import Request
+        request = Request(environ)
+        print('path: %s, url: %s' % (request.path, request.url))
+        # just do here everything what you need
+        return self.app(environ, start_response)
+
+
+
+# app.wsgi_app = Middleware(app.wsgi_app)
 
 if __name__ == "__main__":
     app.run(debug=True)
