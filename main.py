@@ -3,8 +3,6 @@ from flask import Flask, render_template,make_response,Request
 from ADHSConfig.ADHSConfig_app import ADHSConfig_app
 
 
-
-
 class CustomFlask(Flask):
     jinja_options = Flask.jinja_options.copy()
     jinja_options.update(dict(
@@ -47,7 +45,7 @@ class Middleware:
 
 
 
-# app.wsgi_app = Middleware(app.wsgi_app)
+app.wsgi_app = Middleware(app.wsgi_app)
 
 if __name__ == "__main__":
     app.run(debug=True)

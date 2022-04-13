@@ -92,7 +92,7 @@ ReactDOM.render(
     <div id = "content"></div>
     </Content>
     </Content>
-    <Footer style={{ textAlign: 'center' }}>ADHS Web @2022 Created by APCIM</Footer>
+    <Footer style={{ textAlign: 'center', position: "sticky", bottom: "0"  }}>ADHS Web @2022 Created by APCIM</Footer>
   </Layout>,
   document.getElementById('container'),
 );
