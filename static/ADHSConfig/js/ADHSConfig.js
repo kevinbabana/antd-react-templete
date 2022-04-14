@@ -1,43 +1,48 @@
-const  { useState } = React;
+const  { useState,useEffect } = React;
+const { List,Form, Row, Col, Input, Button, Select, TimePicker,Card ,Empty,DatePicker, Space ,Modal,Spin, Table,AutoComplete} = antd;
+
 const Configpage = () =>{
     
     const ConfigKey = Cookies.get('ConfigKey')
-    const ConfigList = [];
+    const ConfigList = [ {
+        title: 'Title 1',
+      },
+      {
+        title: 'Title 2',
+      },
+      {
+        title: 'Title 3',
+      },
+      {
+        title: 'Title 4',
+      },];
     const [myArray, setMyArray] = useState([]);
-
     
-    fetch( '/ADHSConfig?ConfigKey='+ConfigKey, {
-        method: "GET",
-        /*body: JSON.stringify(data),   /*把json資料字串化*/
-        headers: new Headers({
-            'Content-Type': 'application/json'
+    useEffect(()=>{
+        axios.get('/ADHSConfig?ConfigKey='+ConfigKey)
+        .then(res =>{
+            console.log(res)
+            setMyArray(res.data)
+        }).catch(err=>{
+            console.log(err)
         })
-    })
-    .then(res => res.json())
-    .then(data => {
-          /*接到request data後要做的事情*/
-          console.log(Object.keys(data).length)
-          const gridStyle = {
-            width: '25%',
-            textAlign: 'center',
-          };
-          Object.keys(data).forEach(function(key) {
-            console.log(data[key])
-            ConfigList.push(<Card.Grid style={gridStyle}>{key}</Card.Grid>)
-            setMyArray(oldArray => [...oldArray, <Card.Grid style={gridStyle}>{key}</Card.Grid>]);
-          });
-          
-          
-    })
-    .catch(e => {
-        /*發生錯誤時要做的事情*/
-    })
+    } ,[])
+    
+    
 
 
     
    
     console.log('sxsxs'+ConfigList)
-    return <Card title="Card Title">{ConfigList}</Card>
+    return <List
+    grid={{ gutter: 16, column: 4 }}
+    dataSource={myArray}
+    renderItem={item => (
+      <List.Item>
+        <Card >{item.Name}</Card>
+      </List.Item>
+    )}
+  />
     
     }
 

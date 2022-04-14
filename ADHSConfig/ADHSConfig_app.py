@@ -17,7 +17,7 @@ def page_load():
 def get_link_lists():
     key = request.args.get('ConfigKey') 
     print(key)   
-    resp = {'TesterList':'TesterListUrl','B':'BUrl' }
+    resp = [{'Name':'TesterList','Url':'TesterListUrl'},{'Name':'B','Url':'BUrl'}]
     return jsonify(resp)
 
 
