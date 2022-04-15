@@ -29,7 +29,7 @@ def ADHSConfig():
 
 @app.route("/")
 def test():   
-    return render_template("test.html")
+    return render_template("home.html")
 
 class Middleware:
 
